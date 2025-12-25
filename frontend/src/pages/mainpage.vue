@@ -478,7 +478,7 @@ const api = axios.create({
   baseURL:
     window.location.hostname === 'localhost'
       ? 'http://localhost:5000'
-      : 'https://demo-store-zk1t.onrender.com/',
+      : import.meta.env.VITE_API_BASE_URL,
   headers: { 'Content-Type': 'application/json' },
 })
 
