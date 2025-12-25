@@ -478,13 +478,13 @@ const api = axios.create({
   baseURL:
     window.location.hostname === 'localhost'
       ? 'http://localhost:5000'
-      : 'https://rua11store-catalog-api-lbp7.onrender.com/',
+      : 'https://demo-store-zk1t.onrender.com/',
   headers: { 'Content-Type': 'application/json' },
 })
 
 const baseUrl =  window.location.hostname === 'localhost'
       ? 'http://localhost:3000'
-      : 'https://demo-store.com/';
+      : 'https://demo-store-zk1t.onrender.com/';
 
 const { setSeo } = useSeo()
 
