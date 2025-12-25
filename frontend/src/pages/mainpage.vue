@@ -484,7 +484,7 @@ const api = axios.create({
 
 const baseUrl =  window.location.hostname === 'localhost'
       ? 'http://localhost:3000'
-      : 'https://demo-store-six-zeta.vercel.app';
+      : 'https://demo-store-six-zeta.vercel.app/';
 
 const { setSeo } = useSeo()
 
