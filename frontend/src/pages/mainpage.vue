@@ -108,7 +108,7 @@
                     <v-card-text>
 
                       <template v-if="product.seo?.slug && product.seo.slug.trim() !== ''">
-                        <a :href="`${baseUrl}/products/productView/${product.seo.slug}`"
+                        <a :href="baseUrl+`products/productView/${product.seo.slug}`"
                           target="_blank" rel="noopener noreferrer">
                           <v-img :src="product.thumbnail_path" :alt="product.seo?.slug" class="cursor-pointer" cover>
 
