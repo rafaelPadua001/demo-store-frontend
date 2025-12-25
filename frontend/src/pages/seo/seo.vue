@@ -84,12 +84,12 @@ import StarterKit from '@tiptap/starter-kit'
 import { useHead } from '@vueuse/head';
 
 
-
 const api = axios.create({
-    baseURL: window.location.hostname === "localhost"
-        ? "http://localhost:5000"
-        : "https://rua11store-catalog-api-lbp7.onrender.com",
-    headers: { "Content-Type": "application/json" },
+  baseURL:
+    window.location.hostname === 'localhost'
+      ? 'http://localhost:5000'
+      : import.meta.env.VITE_API_BASE_URL,
+  headers: { 'Content-Type': 'application/json' },
 });
 
 export default {

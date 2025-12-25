@@ -484,7 +484,7 @@ const api = axios.create({
 
 const baseUrl =  window.location.hostname === 'localhost'
       ? 'http://localhost:3000'
-      : 'https://demo-store-zk1t.onrender.com/';
+      : import.meta.env.VITE_API_BASE_URL;
 
 const { setSeo } = useSeo()
 

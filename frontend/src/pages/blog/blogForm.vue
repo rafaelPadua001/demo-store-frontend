@@ -111,7 +111,8 @@ import axios from 'axios'
 const API_BASE =
   window.location.hostname === 'localhost'
     ? 'http://localhost:5000'
-    : 'https://rua11store-catalog-api-lbp7.onrender.com'
+    : import.meta.env.VITE_API_BASE_URL
+
 
 export default {
   components: { EditorContent },

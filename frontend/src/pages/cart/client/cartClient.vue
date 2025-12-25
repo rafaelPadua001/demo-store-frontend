@@ -97,12 +97,12 @@ const userId = localStorage.getItem('user_id');
 const token = localStorage.getItem("access_token") || localStorage.getItem('token');
 const router = useRouter();
 const api = axios.create({
-    baseURL:
-        window.location.hostname === "localhost"
-            ? "http://localhost:5000"
-            : "https://rua11store-catalog-api-lbp7.onrender.com",
-    headers: { "Content-Type": "application/json" },
-});
+  baseURL:
+    window.location.hostname === 'localhost'
+      ? 'http://localhost:5000'
+      : import.meta.env.VITE_API_BASE_URL,
+  headers: { 'Content-Type': 'application/json' },
+})
 
 const getItemsCart = async () => {
     try {

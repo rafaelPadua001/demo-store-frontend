@@ -82,13 +82,13 @@ import BlogForm from "./blogForm.vue";
 //   import { directive as mask } from "v-mask";
 
 
-const api = axios.create({
-    baseURL:
-        window.location.hostname === "localhost"
-            ? "http://localhost:5000"
-            : "https://rua11store-catalog-api-lbp7.onrender.com",
-    headers: { "Content-Type": "application/json" },
-});
+    const api = axios.create({
+  baseURL:
+    window.location.hostname === 'localhost'
+      ? 'http://localhost:5000'
+      : import.meta.env.VITE_API_BASE_URL,
+  headers: { 'Content-Type': 'application/json' },
+})
 
 export default {
     components: {
