@@ -291,7 +291,11 @@ export default {
       comments: [],
       colorNames: {
         "#000000": "Preto",
+        "#070707": "Preto",
+        "#0C0C0C": "Preto",
+        "#0F0F0F": "Preto",
         "#FFFFFF": "Branco",
+        "#FCF8F8": "Branco",
         "#FF0000": "Vermelho",
         "#EB0909": "Vermelho",
         "#00FF00": "Verde",
