@@ -496,26 +496,13 @@ const prevStep = () => {
 }
 
 const getItemQuantity = (item) => {
-
-  if (item.variations?.length) {
-    return item.variations.reduce(
-      (t, v) => t + (v.quantity || 0),
-      0
-    )
-  }
-  return item.quantity || 0
+  return Number(item.quantity) || 0
 }
 
-const setItemQuantity = (item, value) => {
-  const qty = Number(value) || 0
 
-  if (item.variations?.length) {
-    item.variations.forEach(v => {
-      v.quantity = qty
-    })
-  } else {
-    item.quantity = qty
-  }
+const setItemQuantity = (item, value) => {
+  const qty = Math.max(1, Number(value) || 1)
+  item.quantity = qty
 }
 
 
@@ -525,12 +512,7 @@ const totalCarrinho = computed(() => {
   return cart.items.reduce((acc, item) => {
     const price = Number(item.product_price) || 0
 
-    const quantity = item.variations?.length
-      ? item.variations.reduce(
-          (t, v) => t + (Number(v.quantity) || 0),
-          0
-        )
-      : Number(item.quantity) || 0
+    const quantity = Number(item.quantity) || 0
 
     return acc + price * quantity
   }, 0)

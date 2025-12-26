@@ -76,10 +76,9 @@
                           {{ colorNames[variation.value?.toUpperCase()] || variation.value }}
                         </v-chip>
 
-                        <v-text-field v-model.number="variation.quantity" type="number" min="1" density="compact"
-                          hide-details style="max-width: 70px" @click.stop @mousedown.stop />
+                        
                       </div>
-                      <div v-else class="d-flex align-center mb-2">
+                      <div class="d-flex align-center mb-2">
                         <v-text-field v-model.number="item.quantity" type="number" min="1" density="compact"
                           hide-details style="max-width: 70px" @click.stop @mousedown.stop />
                       </div>
@@ -93,14 +92,7 @@
 
 
                     <div class="text-caption text-grey">
-                      {{
-                        item.variations?.length
-                          ? item.variations.reduce(
-                            (total, v) => total + (Number(v.quantity) || 0),
-                            0
-                          )
-                          : (Number(item.quantity) || 0)
-                      }}
+                      {{ item.quantity }}
                       x R$ {{ item.product_price }}
                     </div>
 
@@ -119,12 +111,11 @@
                   <strong>Total:</strong>
                   <span>
                     R$
+                    
                     {{
                       cart.items
                         .reduce((acc, i) => {
-                          const quantity = i.variations?.length
-                            ? i.variations.reduce((t, v) => t + (v.quantity || 0), 0)
-                            : i.quantity || 0
+                          const quantity =  i.quantity || 0
 
                           return acc + i.product_price * quantity
                         }, 0)

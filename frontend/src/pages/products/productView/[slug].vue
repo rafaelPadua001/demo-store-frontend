@@ -97,13 +97,25 @@
 
               </span>
 
-              <!-- Quantity field-->
+              <!-- Quantity field
               <v-text-field v-model.number="selectedVariation.input_quantity" type="number" min="0"
                 :max="selectedVariation.stock_quantity" density="compact" hide-details style="max-width: 90px;"
-                label="Qtd:" />
+                label="Qtd:" />-->
 
             </div>
           </div>
+
+           <v-text-field
+    v-if="Object.keys(groupedVariations).length >= 1"
+    class="ml-4"
+    v-model.number="productQuantity"
+    type="number"
+    min="1"
+    density="compact"
+    hide-details
+    style="max-width: 120px"
+    label="Qtd"
+  />
         </div>
 
       </v-col>
@@ -447,15 +459,15 @@ export default {
           alert('Não é permitido adicionar quantidade de variações maior que o estoque disponível');
           return;
         }
-
+       
         const variationsPayload = this.selectedVariations
-          .filter(v => v.input_quantity > 0)
+          .filter(v => this.productQuantity > 0)
           .map(v => ({
             variation_id: v.id,
-            quantity: v.input_quantity,
+            quantity: this.productQuantity,
             value: v.value
           }))
-
+       
         if (variationsPayload.length === 0) {
           alert('Informe a quantidade de pelo menos uma variação');
         }
@@ -463,6 +475,7 @@ export default {
 
         const response = await api.post(`/cart/add-cart`, {
           product_id: product.id,
+          quantity: this.productQuantity,
           selectedVariations: variationsPayload,
         },
           {
