@@ -63,17 +63,19 @@
             <div v-if="items && items.length" class="mb-3">
               <strong class="mr-2">{{ type }}:</strong>
 
-              <v-chip v-for="(variation, i) in items.filter(v => v && (v.quantity === undefined || v.quantity > 0))"
-                :key="i" class="ma-1" :color="type === 'Color' ? variation.value : undefined"
-                @click="selectVariation(variation)" clickable outlined small>
-                <span v-if="type === 'Color'">
-                  {{ colorNames[variation.value?.toUpperCase()] || variation.value }}
-                </span>
+              <v-chip v-for="variation in items" :key="`${type}-${variation.id}`" class="ma-1" small clickable
+                @click="selectVariation(variation)" :style="type === 'Color' ? chipColorStyle(variation.value) : {}">
 
+                <span v-if="type === 'Color'">
+                  {{ colorNames[variation.value] || variation.value }}
+                </span>
                 <span v-else>
                   {{ variation.value }}
                 </span>
               </v-chip>
+
+
+
 
             </div>
           </template>
@@ -105,17 +107,12 @@
             </div>
           </div>
 
-           <v-text-field
-    v-if="Object.keys(groupedVariations).length >= 1"
-    class="ml-4"
-    v-model.number="productQuantity"
-    type="number"
-    min="1"
-    density="compact"
-    hide-details
-    style="max-width: 120px"
-    label="Qtd"
-  />
+          <v-text-field v-if="Object.keys(groupedVariations).length >= 1" class="ml-4" v-model.number="productQuantity"
+            type="number" min="1" density="compact" hide-details style="max-width: 120px" label="Qtd" />
+
+          <v-btn variant="plain">
+            <v-icon size="small" color="red" @click="clearVariations()">mdi-close</v-icon>
+          </v-btn>
         </div>
 
       </v-col>
@@ -273,6 +270,7 @@
 import axios from "axios";
 import { useSeo } from "@/useSeo";
 import commentForm from "@/pages/comments/client/commentForm.vue";
+import Products from "../products.vue";
 
 
 
@@ -320,7 +318,7 @@ export default {
         // coloque aqui os HEX que seu catálogo usa
       },
       selectedVariations: [],
-
+      productQuantity: 1,
     };
   },
   async created() {
@@ -395,6 +393,13 @@ export default {
         const response = await api.get(`/products/product/${pageSlug}`);
         this.product = response.data;
 
+        this.product.variations.forEach(v => {
+          if (v.variation_type === 'Color') {
+            v.value = this.normalizeHexColor(v.value) || v.value;
+          }
+        });
+
+
         if (this.product.seo) {
           const { setSeo } = useSeo();
           setSeo(this.product);
@@ -442,6 +447,44 @@ export default {
         input_quantity: 0
       }
     },
+    normalizeHexColor(value) {
+      if (!value || typeof value !== 'string') return null;
+
+      let hex = value.trim().toUpperCase()
+      console.log('Hex', hex)
+      //add '#' if is empty
+      if (!hex.startsWith('#') && /^[0-9A-F]{6}$/.test(hex)) {
+        hex = `#${hex}`;
+      }
+
+      if (!/^#[0-9A-F]{6}$/.test(hex)) {
+        return null;
+      }
+      console.log(hex);
+      return hex;
+    },
+    chipColorStyle(value) {
+      if (!value || typeof value !== 'string') return {};
+
+      return {
+        backgroundColor: value,
+        color: '#fff',
+        border: '1px solid ' + value
+      };
+    }
+    ,
+    async clearVariations() {
+      this.selectedVariations = [];
+      if (this.selectedVariations && Array.isArray(this.selectedVariations.variations)) {
+        this.selectedVariations.variations = [];
+      }
+
+      if (this.productQuantity) {
+        this.productQuantity = 1;
+      }
+
+
+    },
     async addItemCart(product) {
       try {
         const token = localStorage.getItem('token') || localStorage.getItem('access_token');
@@ -459,7 +502,7 @@ export default {
           alert('Não é permitido adicionar quantidade de variações maior que o estoque disponível');
           return;
         }
-       
+
         const variationsPayload = this.selectedVariations
           .filter(v => this.productQuantity > 0)
           .map(v => ({
@@ -467,7 +510,7 @@ export default {
             quantity: this.productQuantity,
             value: v.value
           }))
-       
+
         if (variationsPayload.length === 0) {
           alert('Informe a quantidade de pelo menos uma variação');
         }
