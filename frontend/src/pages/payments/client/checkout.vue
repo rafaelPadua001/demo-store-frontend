@@ -468,24 +468,24 @@ const nextStep = async () => {
       return
     }
 
-    const zipcodeOrigin = '73082180' // CEP da loja
-
-    try {
-      const products = JSON.parse(localStorage.getItem('cartProducts')) || []
-
-      const { data } = await api.post('/melhorEnvio/calculate-delivery', {
-        zipcode_origin: zipcodeOrigin,
-        zipcode_destiny: cep,
-        products
-      })
-
-      availableDeliveries.value = data
-      console.log('Fretes calculados:', data)
-    } catch (error) {
-      console.error('Erro ao calcular frete:', error)
-      alert('Erro ao calcular o frete. Tente novamente.')
-      return
-    }
+   // const zipcodeOrigin = '73082180' // CEP da loja
+//
+   // try {
+   //   const products = JSON.parse(localStorage.getItem('cartProducts')) || []
+//
+   //   const { data } = await api.post('/melhorEnvio/calculate-delivery', {
+   //     zipcode_origin: zipcodeOrigin,
+   //     zipcode_destiny: cep,
+   //     products
+   //   })
+//
+   //   availableDeliveries.value = data
+   //   console.log('Fretes calculados:', data)
+   // } catch (error) {
+   // //  console.error('Erro ao calcular frete:', error)
+   //   alert('Erro ao calcular o frete. Tente novamente.')
+   //   return
+   // }
   }
 
   if (currentStep.value < 3) currentStep.value++
@@ -755,8 +755,8 @@ const saveAddress = async () => {
 
     nextStep()
   } catch (e) {
-    console.error('Erro ao salvar o endereço:', e)
-    alert('Não foi possível salvar o endereço. Tente novamente.')
+   // console.error('Erro ao salvar o endereço:', e)
+    alert('Não foi possível salvar o endereço. Tente novamente.', e)
   }
 };
 
