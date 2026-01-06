@@ -122,7 +122,7 @@
                                                     <v-btn small color="primary" @click="addHeroButton">Adicionar
                                                         Botões
                                                     </v-btn>
-                                                    <div v-for="(btn, index) in JSON.parse(editedPage.heroButtons)" :key="index"
+                                                    <div v-for="(btn, index) in heroButtonsParsed" :key="index"
                                                         class="mt-3">
                                                         
                                                         <v-text-field v-model="btn.label" label="Button Text" dense />
@@ -465,9 +465,22 @@ export default {
         },
         deep: true,
     },
-    // computed: {
-    //    
-    // },
+    computed: {
+        heroButtonsParsed(){
+            try{
+                if(!this.editedPage.heroButtons){
+                    return [];
+                }
+
+                return Array.isArray(this.editedPage.heroButtons)
+                    ? this.editedPage.heroButtons
+                    : JSON.parse(this.editedPage.heroButtons);
+            }
+            catch(e){
+                return [];
+            }
+        }    
+    },
     async created() {
         this.loadpages();
         this.loadProducts();
@@ -542,9 +555,9 @@ export default {
             this.editedPage.heroButtons.push({ label: '', url: '' });
         },
         removeHeroButton(index) {
-            const parsedButtons = JSON.parse(this.editedPage.heroButtons);
-            parsedButtons.splice(index, 1);
-            this.editedPage.heroButtons = JSON.stringify(parsedButtons)
+            const buttons = [...this.heroButtonsParsed];
+            buttons.splice(index, 1);
+            this.editedPage.heroButtons = buttons
         },
         addCarouselImage(url) {
             if (!Array.isArray(this.editedPage.carouselImages)) {
