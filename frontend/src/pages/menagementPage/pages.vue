@@ -122,8 +122,9 @@
                                                     <v-btn small color="primary" @click="addHeroButton">Adicionar
                                                         Botões
                                                     </v-btn>
-                                                    <div v-for="(btn, index) in editedPage.heroButtons" :key="index"
+                                                    <div v-for="(btn, index) in JSON.parse(editedPage.heroButtons)" :key="index"
                                                         class="mt-3">
+                                                        
                                                         <v-text-field v-model="btn.label" label="Button Text" dense />
                                                         <v-text-field v-model="btn.url" label="Button URL" />
                                                         <v-combobox v-model="btn.icon" :items="heroIcons"
@@ -541,7 +542,9 @@ export default {
             this.editedPage.heroButtons.push({ label: '', url: '' });
         },
         removeHeroButton(index) {
-            this.editedPage.heroButtons.splice(index, 1);
+            const parsedButtons = JSON.parse(this.editedPage.heroButtons);
+            parsedButtons.splice(index, 1);
+            this.editedPage.heroButtons = JSON.stringify(parsedButtons)
         },
         addCarouselImage(url) {
             if (!Array.isArray(this.editedPage.carouselImages)) {
@@ -600,7 +603,7 @@ export default {
                 }
                 return this.close();
             } catch (error) {
-                console.error("Error saving page:", error);
+                console.log("Error saving page:", error);
             }
         },
         async deletePage(pageId) {
