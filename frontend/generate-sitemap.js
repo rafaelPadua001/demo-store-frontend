@@ -6,8 +6,8 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const API_URL = 'https://rua11store-catalog-api-lbp7.onrender.com';
-const SITE_URL = 'https://rua11store-catalog-api.vercel.app';
+const API_URL = 'https://demo-store-zk1t.onrender.com';
+const SITE_URL = 'https://demo-store-six-zeta.vercel.app';
 
 async function generateSitemap() {
   try {
