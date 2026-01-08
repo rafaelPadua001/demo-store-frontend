@@ -57,11 +57,12 @@
                                             <v-text-field v-model="editedPage.title" label="Título" required />
                                         </v-card-text>
                                     </v-card>
-                                    
+
 
                                     <!-- HERO -->
                                     <v-card class="mb-4" outlined>
                                         <v-card-title>Seção: Hero</v-card-title>
+
                                         <v-card-text>
                                             <v-text-field v-model="editedPage.heroTitle" label="Título do Hero" />
                                             <v-text-field v-model="editedPage.heroSubtitle" label="Subtítulo do Hero" />
@@ -73,10 +74,12 @@
 
                                                     </v-color-picker>
                                                 </v-col>
+
                                                 <v-col cols="8" class="d-flex align-center justify-center">
+
                                                     <v-card height="30%" width="100%" elevation="2"
-                                                        :style="{ backgroundColor: editedPage.heroBackgroundColor || '#f5f5f5' }">
-                                                        <v-card-text class="text-center white-text">
+                                                        :style="{ backgroundColor: editedPage.heroBackgroundColor }">
+                                                        <v-card-text class="text-center text-white">
                                                             Preview Color
                                                         </v-card-text>
                                                     </v-card>
@@ -124,7 +127,7 @@
                                                     </v-btn>
                                                     <div v-for="(btn, index) in heroButtonsParsed" :key="index"
                                                         class="mt-3">
-                                                        
+
                                                         <v-text-field v-model="btn.label" label="Button Text" dense />
                                                         <v-text-field v-model="btn.url" label="Button URL" />
                                                         <v-combobox v-model="btn.icon" :items="heroIcons"
@@ -157,15 +160,13 @@
                                                                 <label for="">Select Button Color:</label>
                                                                 <v-color-picker v-model="btn.heroButtonBackgroundColor"
                                                                     hide-canvas show-swatches mode="hexa"
-                                                                    swatches-max-height="150"
-                                                                    label="Background Hero color">
+                                                                    swatches-max-height="150" />
 
-                                                                </v-color-picker>
                                                             </v-col>
-                                                            <v-col cols="4" class="d-flex align-center justify-center" >
-                                                                <v-card height="30%" width="100%" elevation="2"
-                                                                    :style="{ backgroundColor: editedPage.heroButtonBackgroundColor ?? btn.heroButtonBackgroundColor  }" >
-                                                                    <v-card-text class="text-center white--text">
+                                                            <v-col cols="4" class="d-flex align-center justify-center">
+                                                                <v-card height="60" width="100%" elevation="2"
+                                                                    :style="{ backgroundColor: btn.heroButtonBackgroundColor }">
+                                                                    <v-card-text class="text-center text-white">
                                                                         Preview Color
                                                                     </v-card-text>
                                                                 </v-card>
@@ -280,7 +281,7 @@
                                     <v-card outlined>
                                         <v-card-title>Seção Decriçao:</v-card-title>
                                         <v-card-text>
-                                            <v-card  max-width="600" elevation="0">
+                                            <v-card max-width="600" elevation="0">
                                                 <div class="d-flex justify-space-between pa-4 pb-0">
                                                     <v-btn-toggle v-model="formatting" variant="outlined" divided
                                                         multiple>
@@ -288,50 +289,42 @@
                                                             @click="editor.chain().focus().toggleBulletList().run()"
                                                             :color="editor.isActive('bulletList') ? 'primary' : ''">
                                                             <v-icon icon="mdi-format-list-bulleted"></v-icon>
-                                                           
+
                                                         </v-btn>
                                                         <v-btn small @click="editor.chain().focus().toggleBold().run()"
                                                             :color="editor.isActive('bold') ? 'primary' : ''">
-                                                           <v-icon icon="mdi-format-bold"></v-icon>
-                                                           
+                                                            <v-icon icon="mdi-format-bold"></v-icon>
+
                                                         </v-btn>
                                                         <v-btn small
                                                             @click="editor.chain().focus().toggleItalic().run()"
-                                                            :color="editor.isActive('italic') ? 'primary' : ''"> 
+                                                            :color="editor.isActive('italic') ? 'primary' : ''">
                                                             <v-icon icon="mdi-format-italic"></v-icon>
                                                         </v-btn>
-                                                        
+
                                                     </v-btn-toggle>
 
-                                                    <v-btn-toggle
-                                                        v-model="alignment"
-                                                        variant="outlined"
-                                                        divided
-                                                    >
+                                                    <v-btn-toggle v-model="alignment" variant="outlined" divided>
                                                         <v-btn>
                                                             <v-icon icon="mdi-format-align-center"></v-icon>
-                                                            </v-btn>
+                                                        </v-btn>
 
-                                                            <v-btn>
+                                                        <v-btn>
                                                             <v-icon icon="mdi-format-align-left"></v-icon>
-                                                            </v-btn>
+                                                        </v-btn>
 
-                                                            <v-btn>
+                                                        <v-btn>
                                                             <v-icon icon="mdi-format-align-right"></v-icon>
-                                                            </v-btn>
+                                                        </v-btn>
 
                                                     </v-btn-toggle>
 
-                                                    <v-btn-toggle
-                                                        v-model="alignment"
-                                                        variant="outlined"
-                                                        divided
-                                                    >
-                                                        <v-btn  variant="tonal" color="primary">
+                                                    <v-btn-toggle v-model="alignment" variant="outlined" divided>
+                                                        <v-btn variant="tonal" color="primary">
                                                             upload image
                                                         </v-btn>
 
-                                                           
+
 
                                                     </v-btn-toggle>
                                                 </div>
@@ -379,11 +372,11 @@ import StarterKit from '@tiptap/starter-kit'
 
 
 const api = axios.create({
-  baseURL:
-    window.location.hostname === 'localhost'
-      ? 'http://localhost:5000'
-      : import.meta.env.VITE_API_BASE_URL,
-  headers: { 'Content-Type': 'application/json' },
+    baseURL:
+        window.location.hostname === 'localhost'
+            ? 'http://localhost:5000'
+            : import.meta.env.VITE_API_BASE_URL,
+    headers: { 'Content-Type': 'application/json' },
 })
 
 export default {
@@ -457,18 +450,37 @@ export default {
     },
     watch: {
         editedPage: {
-            handler(newVal) {
-                if (this.editor && newVal?.content !== undefined) {
-                    this.editor.commands.setContent(newVal.content || '<p></p>');
+            handler(page) {
+                if (!page?.heroButtons) return;
+                let buttons = [];
+
+                try {
+                    buttons = Array.isArray(page.heroButtons)
+                        ? page.heroButtons
+                        : JSON.parse(page.heroButtons);
                 }
-            }
+                catch (e) {
+                    buttons = [];
+                }
+
+                buttons.forEach(btn => {
+                    if (btn?.heroButtonBackgroundColor?.hexa) {
+                        this.$set(
+                            btn,
+                            'heroButtonBackgroundColor',
+                            btn.heroButtonBackgroundColor.hexa
+                        );
+                    }
+                });
+                this.editedPage.heroButtons = buttons;
+            },
         },
         deep: true,
     },
     computed: {
-        heroButtonsParsed(){
-            try{
-                if(!this.editedPage.heroButtons){
+        heroButtonsParsed() {
+            try {
+                if (!this.editedPage.heroButtons) {
                     return [];
                 }
 
@@ -476,10 +488,10 @@ export default {
                     ? this.editedPage.heroButtons
                     : JSON.parse(this.editedPage.heroButtons);
             }
-            catch(e){
+            catch (e) {
                 return [];
             }
-        }    
+        }
     },
     async created() {
         this.loadpages();
@@ -549,15 +561,25 @@ export default {
             this.carouselDialog = true;
         },
         addHeroButton() {
-            if(!this.editedPage.heroButtons){
+            if (!this.editedPage.heroButtons) {
                 this.editedPage.heroButtons = [];
             }
-            this.editedPage.heroButtons.push({ label: '', url: '' });
+            this.editedPage.heroButtons.push({ label: '', url: '', heroButtonBackgroundColor: '', icon: null });
         },
-        removeHeroButton(index) {
-            const buttons = [...this.heroButtonsParsed];
-            buttons.splice(index, 1);
-            this.editedPage.heroButtons = buttons
+        async removeHeroButton(index) {
+            const pageId = this.editedPage.id;
+
+            try {
+                await api.delete(`/pages/pages/${pageId}/hero-buttons/${index}`);
+
+                this.heroButtonsParsed.splice(index, 1);
+                this.editedPage.heroButtons = JSON.stringify(this.heroButtonsParsed);
+
+            } catch (e) {
+                console.error('erro ao remover o botão');
+                console.error(e.response?.status);
+                console.error(e.response?.data);
+            }
         },
         addCarouselImage(url) {
             if (!Array.isArray(this.editedPage.carouselImages)) {
@@ -656,7 +678,8 @@ export default {
     min-height: 200px;
     border-radius: 4px;
 }
+
 .editor-content * {
-  outline: none !important;
+    outline: none !important;
 }
 </style>
