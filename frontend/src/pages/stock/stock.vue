@@ -9,17 +9,42 @@
 
                 <v-data-table :headers="headers" :items="stocks" :items-per-page="10" class="elevation-1" item-key="id"
                     fixed-header height="500" :loading="loading" loading-text="Loading stock...">
-                
+
                     <template v-slot:item.thumbnail_path="{ item }">
-                        <v-img v-if="item.product.thumbnail_path" :src="getProductImage(item.product.thumbnail_path, item.id) " alt="Product Image" contain :width="70" :height="70" 
-                            class="rounded-lg"></v-img>
+                        <v-img v-if="item.product.thumbnail_path"
+                            :src="getProductImage(item.product.thumbnail_path, item.id)" alt="Product Image" contain
+                            :width="70" :height="70" class="rounded-lg"></v-img>
                         <span v-else>No Image</span>
                     </template>
 
-                    <template v-slot:item.product_price="{item}">
+                    <template v-slot:item.variations="{ item }">
+                        <div class="d-flex flex-column ga-1">
+
+                            <!-- 🎨 CORES -->
+                            <div class="d-flex flex-wrap ga-1">
+                                <v-chip v-for="variation in item.variations.filter(v => v.variation_type === 'Color')"
+                                    :key="variation.id" size="small" :color="variation.value.toLowerCase()"
+                                    variant="flat">
+                                    {{ variation.value }} · {{ variation.quantity }}
+                                </v-chip>
+                            </div>
+
+                            <!-- 📏 TAMANHOS -->
+                            <div class="d-flex flex-wrap ga-1">
+                                <v-chip v-for="variation in item.variations.filter(v => v.variation_type === 'Size')"
+                                    :key="variation.id" size="small" variant="outlined">
+                                    {{ variation.value }} · {{ variation.quantity }}
+                                </v-chip>
+                            </div>
+
+                        </div>
+                    </template>
+
+
+                    <template v-slot:item.product_price="{ item }">
                         R$ {{ item.product.price }}
                     </template>
-                    
+
                     <template v-slot:item.actions="{ item }">
                         <v-icon small @click.stop="deleteStock(item.id)" color="error">
                             mdi-delete
@@ -59,11 +84,11 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL:
-    window.location.hostname === 'localhost'
-      ? 'http://localhost:5000'
-      : import.meta.env.VITE_API_BASE_URL,
-  headers: { 'Content-Type': 'application/json' },
+    baseURL:
+        window.location.hostname === 'localhost'
+            ? 'http://localhost:5000'
+            : import.meta.env.VITE_API_BASE_URL,
+    headers: { 'Content-Type': 'application/json' },
 });
 
 export default {
@@ -75,7 +100,7 @@ export default {
             editedStock: { id: null, name: "", quantity: 1 },
             stocks: [],
             headers: [
-                { title: "Product Image", key: "thumbnail_path", sortable: false  },
+                { title: "Product Image", key: "thumbnail_path", sortable: false },
                 { title: "Product Name", key: "product_name" },
                 { title: "Variations", key: "variations" },
                 { title: "Quantity", key: "product_quantity" },
@@ -100,7 +125,7 @@ export default {
             }
         },
         getProductImage(imagePath, productId = null) {
-            
+
             // Imagem padrão se não houver caminho
             if (!imagePath) return "https://via.placeholder.com/300";
 
@@ -110,8 +135,8 @@ export default {
             }
 
             return imagePath.startsWith('http')
-            ? imagePath.replace('http://', 'https://') // garante HTTPS
-            : imagePath;
+                ? imagePath.replace('http://', 'https://') // garante HTTPS
+                : imagePath;
 
             // Define a base URL conforme o ambiente
             const baseUrl = window.location.hostname === 'localhost'
@@ -135,7 +160,7 @@ export default {
             else if (this.editedProduct?.name) {
                 productName = this.editedProduct.name.replace(/\s+/g, '_').toLowerCase();
             }
-           
+
             return `${baseUrl}/${imagePath}`;
         },
         async deleteStock(id) {
