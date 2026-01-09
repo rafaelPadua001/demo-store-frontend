@@ -51,9 +51,9 @@
                         </span>
                     </template>
 
-                    <template v-slot:item.paymentDate="{item}">
+                   <!-- <template v-slot:item.paymentDate="{item}">
                         {{ new Date(item.paymentDate).toLocaleDateString('pt-BR')  }}
-                    </template>
+                    </template> -->
 
 
                     <!-- 🔹 Slot para ações -->
@@ -181,10 +181,10 @@ export default {
                 { title: "Email", key: "userEmail" },
                 // { title: "Payment Id", key: "paymentId" },
                 //{ title: "Payment Type", key: "paymentType" },
-                { title: "Status", key: "status" },
+                { title: "Status", key: "status", align: 'center'},
                 // { title: "User Id", key: "userId" },
                 { title: "Total Value", key: "totalValue", align: "end" },
-                { title: "Payment Date", key: "paymentDate" },
+               // { title: "Payment Date", key: "paymentDate" },
                 { title: "Actions", key: "actions", width: "100px", align: "center", sortable: false },
             ],
         };

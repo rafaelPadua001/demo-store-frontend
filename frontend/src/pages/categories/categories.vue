@@ -107,9 +107,9 @@ export default {
       defaultItem: { id: null, name: '', is_subcategory: null, parent_id: null },
       headers: [
         // { text: 'ID', value: 'id', width: '80px', align: 'center' },
-        { title: 'Name', key: 'name', width: '250px' },
-        { title: 'Type', key: 'type', width: '150px', align: 'center' },
-        { title: 'Actions', key: 'actions', width: '120px', align: 'center', sortable: false }
+        { title: 'Name', key: 'name', width: '200px', align: "start"},
+        { title: 'Type', key: 'type', width: '90px', align: 'start'},
+        { title: 'Actions', key: 'actions', width: '100px', align: 'center', sortable: false }
       ],
       categoryTypes: [
         { title: 'Main Category', key: false },

@@ -422,12 +422,12 @@ export default {
                 { title: 'Facebook', value: 'mdi-facebook' }
             ],
             headers: [
-                { title: "ID", key: "id" },
+                { title: "ID", key: "id", align:'start' },
                 // { title: "User ID", key: "user_id" },
-                { title: "Name", key: "name" },
-                { title: "Title", key: "title" },
-                { title: "Content", key: "content", align: "right" },
-                { title: "Actions", key: "actions", width: "120px", align: "center", sortable: false },
+                { title: "Name", key: "name", align:'start'},
+                { title: "Title", key: "title", align:'center'},
+                { title: "Content", key: "content", align: "start" },
+                { title: "Actions", key: "actions", align: "start", sortable: false },
             ],
             defaultPage: {
                 id: null,
